@@ -1,59 +1,51 @@
-<x-guest-layout>
-    <x-auth-card>
-        <x-slot name="logo">
-            <a href="/">
-                <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
-            </a>
-        </x-slot>
+@extends('layouts.layout')
 
-        <!-- Validation Errors -->
-        <x-auth-validation-errors class="mb-4" :errors="$errors" />
+@section('title')
+    Page d'Inscription
+@endsection
 
-        <form method="POST" action="{{ route('register') }}">
-            @csrf
+@section('content')
+    <div class="container-lg">
+        <div class="col-6 d-flex flex-column mx-auto">
+            <h1>Demande d'inscription</h1>
 
-            <!-- Name -->
             <div>
-                <x-label for="name" :value="__('Name')" />
-
-                <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus />
+                <p class="mt-4">Ce formulaire vous permet d'envoyer une demande d'inscription aux administrateurs de la plateforme.</p>
+                <p>Si votre demande a été accepté, vous recevrez par mail les différentes informations necéssaires pour vous connecter.</p>
             </div>
 
-            <!-- Email Address -->
-            <div class="mt-4">
-                <x-label for="email" :value="__('Email')" />
+            @if(isset($requestSent))
+                <p class="list-group-item list-group-item-success mt-3 mb-0">Votre demande d'inscription a bien été prise en compte.</p>
+            @elseif ($errors->any())
+                <ul class="list-group mt-3">
+                    @foreach ($errors->all() as $error)
+                        <li class="list-group-item list-group-item-danger">{{ $error }}</li>
+                    @endforeach
+                </ul>
+            @endif
 
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required />
-            </div>
+            <form action="{{ route('register') }}" method="post" class="mt-3">
+                @csrf
 
-            <!-- Password -->
-            <div class="mt-4">
-                <x-label for="password" :value="__('Password')" />
+                <div class="form-group mt-3">
+                    <label>Email</label>
+                    <input type="email" class="form-control" name="email" value="{{ old('email') }}" required/>
+                </div>
 
-                <x-input id="password" class="block mt-1 w-full"
-                                type="password"
-                                name="password"
-                                required autocomplete="new-password" />
-            </div>
+                <div class="row">
+                    <div class="col form-group mt-3">
+                        <label>Nom</label>
+                        <input type="text" class="form-control" name="lastname" value="{{ old('lastname') }}" required/>
+                    </div>
 
-            <!-- Confirm Password -->
-            <div class="mt-4">
-                <x-label for="password_confirmation" :value="__('Confirm Password')" />
+                    <div class="col form-group mt-3">
+                        <label>Prénom</label>
+                        <input type="text" class="form-control" name="firstname" value="{{ old('firstname') }}" required/>
+                    </div>
+                </div>
 
-                <x-input id="password_confirmation" class="block mt-1 w-full"
-                                type="password"
-                                name="password_confirmation" required />
-            </div>
-
-            <div class="flex items-center justify-end mt-4">
-                <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('login') }}">
-                    {{ __('Already registered?') }}
-                </a>
-
-                <x-button class="ml-4">
-                    {{ __('Register') }}
-                </x-button>
-            </div>
-        </form>
-    </x-auth-card>
-</x-guest-layout>
+                <button type="submit" class="btn btn-primary mt-4">Envoyer la demande</button>
+            </form>
+        </div>
+    </div>
+@endsection

@@ -3,13 +3,18 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\RegisterRequest;
+use App\Mail\RegisterUserMail;
+use App\Models\SignUpRequest;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Rules;
+use Illuminate\View\View;
 
 class RegisteredUserController extends Controller
 {
@@ -31,24 +36,23 @@ class RegisteredUserController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(Request $request)
+    public function store(RegisterRequest $request)
     {
-        $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+        $request->validated();
+
+        SignUpRequest::create([
+            'email'     => $request->email,
+            'lastname'  => $request->lastname,
+            'firstname' => $request->firstname
         ]);
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
+        $params = array();
+        $params['email'] = $request->email;
+        $params['lastname'] = $request->lastname;
+        $params['firstname'] = $request->firstname;
 
-        event(new Registered($user));
+        Mail::to('administrator@sigma-test.com')->send(new RegisterUserMail($params));
 
-        Auth::login($user);
-
-        return redirect(RouteServiceProvider::HOME);
+        return view('auth.register')->with('requestSent', true);
     }
 }
