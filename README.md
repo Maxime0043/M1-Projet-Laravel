@@ -1,65 +1,69 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# **Projet Laravel M1 - Plateforme de Formations Sigma**
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## À propos du projet
 
-## About Laravel
+Pour ce projet, je devais réaliser une application WEB pour une entreprise fictive nommée **Sigma**.
+Il m'était donc demandé de créer une plateforme de formations en ligne, où seront présents différents types d'utilisateurs.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Les différents utilisateurs sont séparés en 3 catégories :
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+-   Les "**visiteurs**" qui ont la possibilité de parcourir toutes les formations ainsi que les différents chapitres qui les composent.
+-   Les "**formateurs**" qui ont eux la possibilié de se connecter sur le site, de créer des formations et d'administrer toutes celles qu'ils ont créé.
+-   L' "**administrateur**" qui a le pouvoir tout administrer sur le site, que ce soit les utilisateurs ou les formations.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Si vous voulez connaître plus en détail le sujet du projet, je vous invite à aller consulter [ce document](https://maxime-pinna.alwaysdata.net/laravel/projet_sigma_M1/Sujet_Laravel_-_M1_WEB_-_2021___2022.pdf).
 
-## Learning Laravel
+## Les erreurs rencontrées durant le développement
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Durant le développement de ce projet, je n'ai rencontré qu'une seule erreur.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Ce problème survient lorsqu'en tant que formateur, on essaie de modifier le contenu d'un chapitre, qui a été généré par l'outil Faker de Laravel. Lorsqu'on modifie le contenu d'un chapitre, la modification ne s'effectue pas dans la base de données. Cependant, aucune erreur n'est renvoyé suite cette modification.
 
-## Laravel Sponsors
+Par ailleurs, si un formateur crée un chapitre lui-même et qu'il modifie son contenu par la suite, les changement auront bien été pris en compte.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+## Initialisation du projet
 
-### Premium Partners
+Pour pouvoir faire fonctionner ce projet de votre coté, il vous faudra suivre les différentes étapes ci-dessous.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[CMS Max](https://www.cmsmax.com/)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+Avant toute chose, il vous faudra vérifier que vous avez bien installer **PHP** (>= 7.4.24) et **composer** sur votre machine.
+Si ce n'est pas le cas, installez-les.
 
-## Contributing
+-   PHP: [lien de téléchargement](https://windows.php.net/download/)
+-   Composer: [lien de téléchargemen](https://getcomposer.org/download/)
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Une fois la précédente étape vérifiée, il vous faudra créer une base de données MySQL.
 
-## Code of Conduct
+Ensuite, vous devrez dupliquer le fichier nommé "**.env.example**" dans le même répertoire sous le nom "**.env**".
+Dans ce fichier, vous devrez y renseigner les informations de connexion à la base de données que vous avez précédemment créé, ainsi que les informations de connexion au serveur de mail SMTP que vous utilisez.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+> Exemple des informations à ajouter dans le fichier "**.env**" :
 
-## Security Vulnerabilities
+```.env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=nom_base_de_donnees
+DB_USERNAME=utilisateur
+DB_PASSWORD=mot_de_passe
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+MAIL_MAILER=smtp
+MAIL_HOST=smtp.exemple.com
+MAIL_PORT=2525
+MAIL_USERNAME=utilisateur
+MAIL_PASSWORD=mot_de_passe
+MAIL_ENCRYPTION=tls
+MAIL_FROM_ADDRESS=null
+MAIL_FROM_NAME="nom"
+```
 
-## License
+Puis, pour initialiser votre projet, et donc importer tous les modules nécessaires à son bon fonctionnement, vous devrez ouvrir un terminal de commande, vous placer dans le dossier du projet et entrer la commande :
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```bash
+composer install
+```
+
+Pour finir, pour rendre les fichiers du dossier "**storage/app/public**" accessibles depuis le Web, vous devez créer un lien symbolique de "**public/storage**" vers "**storage/app/public**". Pour cela, entrez la commande suivante :
+
+```bash
+php artisan storage:link
+```

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\FormationFilterRequest;
 use App\Http\Requests\FormationStoreRequest;
 use App\Http\Requests\FormationUpdatePictureRequest;
 use App\Http\Requests\FormationUpdateRequest;
@@ -23,9 +24,92 @@ class FormationController extends Controller
             }
 
             $formations = Formation::where('user_id', Auth::user()->id)->get();
-        } else $formations = Formation::all();
+        } else {
+            $formations = Formation::all();
+        }
 
         return view('formations.list', compact('formations'));
+    }
+
+    public function filter(FormationFilterRequest $request)
+    {
+        $params = $request->validated();
+
+        $isFiltered = true;
+
+        if (sizeof($params) == 0) {
+            $formations = Formation::all();
+        } else {
+            if ($params['title'] == null && $params['types'] == null && $params['categories'] == null) {
+                return back();
+            }
+
+            $filters = $params;
+
+            if (Auth::check()) {
+                if (auth()->user()->is_admin) {
+                    return redirect()->route('user-list');
+                }
+
+                $formations = Formation::where('user_id', Auth::user()->id)->get();
+            } else {
+                $formations = Formation::all();
+            }
+
+            if ($params['title'] != null) {
+                $formationTitles = Formation::where('title', 'like', "%" . $params['title'] . "%")->get();
+                $formations = $formations->intersect($formationTitles);
+            }
+
+            if ($params['types'] != null) {
+                $formationsToAdd = array();
+                $types = explode(',', $params['types']);
+
+                foreach ($formations as $formation) {
+                    $canMerged = false;
+
+                    foreach ($types as $type) {
+                        if ($formation->types->contains('name', trim($type))) {
+                            $canMerged = true;
+                            break;
+                        }
+                    }
+
+                    if ($canMerged) {
+                        array_push($formationsToAdd, $formation);
+                    }
+                }
+
+                $formations = $formations->intersect($formationsToAdd);
+            }
+
+            if ($params['categories'] != null) {
+                $formationsToAdd = array();
+                $categories = explode(',', $params['categories']);
+
+                foreach ($formations as $formation) {
+                    $canMerged = false;
+
+                    foreach ($categories as $category) {
+                        if ($formation->categories->contains('name', trim($category))) {
+                            $canMerged = true;
+                            break;
+                        }
+                    }
+
+                    if ($canMerged) {
+                        array_push($formationsToAdd, $formation);
+                    }
+                }
+
+                $formations = $formations->intersect($formationsToAdd);
+            }
+        }
+
+        if (!empty($filters))
+            return view('formations.list', compact(['formations', 'filters', 'isFiltered']));
+
+        return view('formations.list', compact(['formations', 'isFiltered']));
     }
 
     public function details($id)

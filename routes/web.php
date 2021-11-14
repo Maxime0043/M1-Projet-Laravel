@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', [FormationController::class, 'index'])->name('formations-list');
+Route::get('/formations/filter', [FormationController::class, 'filter'])->name('formations-filter');
 
 Route::get('/formations/add-formation', [FormationController::class, 'add'])->name('formation-add')->middleware('auth');
 Route::post('/formations/store-formation', [FormationController::class, 'store'])->name('formation-store')->middleware('auth');

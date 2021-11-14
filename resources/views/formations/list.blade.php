@@ -22,7 +22,39 @@
             <p class="list-group-item list-group-item-success mb-4">La formation "{{ session('formationDeleted') }}" a été supprimée.</p>
         @endif
 
+        <form method="post" action="{{ route('formations-filter') }}" class="mt-4">
+            @csrf
+            @method('GET')
+
+            <div class="row d-flex flex-row align-items-start">
+                <div class="form-group me-2 mb-3 col-md-3">
+                    <input type="text" name="title" class="form-control" @if(!empty($filters)) value="{{ $filters['title'] }}" @endif placeholder="Nom de la formation" />
+                </div>
+
+                <div class="form-group me-2 mb-3 col-md-3">
+                    <input type="text" name="types" class="form-control" @if(!empty($filters)) value="{{ $filters['types'] }}" @endif placeholder="Types" />
+                    <div class="form-text">
+                        Exemple: débutant,M1,...
+                    </div>
+                </div>
+
+                <div class="form-group me-2 mb-3 col-md-3">
+                    <input type="text" name="categories" class="form-control" @if(!empty($filters)) value="{{ $filters['categories'] }}" @endif placeholder="Catégories" />
+                    <div class="form-text">
+                        Exemple: HTML,Laravel,...
+                    </div>
+                </div>
+
+                <div class="form-group col-md">
+                    <button type="submit" class="btn btn-primary">Rechercher</button>
+                </div>
+            </div>
+        </form>
+
+        <a href="{{ route('formations-list') }}" class="btn btn-danger">Supprimer le filtre</a>
+
         @if(sizeof($formations) > 0)
+
             <div class="row mt-5">
                 @foreach($formations as $formation)
                     @if($isUser || (!$isUser && sizeof($formation->chapters)))
@@ -86,8 +118,14 @@
                 @endforeach
             </div>
         @else
-            @if($isUser) <p>Vous n'avez pas encore créé de formations.</p>
-            @else <p>Il n'y a aucune formation pour le moment.</p>
+            @if (empty($isFiltered))
+                @if($isUser)
+                    <p>Vous n'avez pas encore créé de formations.</p>
+                @else
+                    <p>Il n'y a aucune formation pour le moment.</p>
+                @endif
+            @else
+                <p>La recherche effectuée n'a renvoyé aucun résultat.</p>
             @endif
         @endif
     </div>
