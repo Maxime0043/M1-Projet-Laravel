@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ChapterController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FormationController;
 use App\Http\Controllers\SignupRequestController;
+use App\Http\Controllers\TypeController;
 use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
 
@@ -35,6 +37,14 @@ Route::put('/formations/{id}/chapter/{chapter}/update-chapter', [ChapterControll
 Route::delete('/formations/{id}/chapter/{chapter}/delete-chapter', [ChapterController::class, 'delete'])->name('chapter-delete')->middleware('auth');
 Route::get('/formations/{id}/add-chapter', [ChapterController::class, 'add'])->name('chapter-add')->middleware('auth');
 Route::post('/formations/{id}/store-chapter', [ChapterController::class, 'store'])->name('chapter-store')->middleware('auth');
+
+Route::get('/types', [TypeController::class, 'index'])->name('type-list')->middleware('auth');
+Route::post('/types/store-type', [TypeController::class, 'store'])->name('type-store')->middleware('auth');
+Route::delete('/types/{id}/delete-type', [TypeController::class, 'delete'])->name('type-delete')->middleware('auth');
+
+Route::get('/categories', [CategoryController::class, 'index'])->name('category-list')->middleware('auth');
+Route::post('/categories/store-category', [CategoryController::class, 'store'])->name('category-store')->middleware('auth');
+Route::delete('/categories/{id}/delete-category', [CategoryController::class, 'delete'])->name('category-delete')->middleware('auth');
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard')->middleware('auth');
 Route::put('/dashboard/change-picture', [DashboardController::class, 'updatePicture'])->name('update-picture')->middleware('auth');

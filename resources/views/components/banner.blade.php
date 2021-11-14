@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4 py-2">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4 py-2">
     <div class="container-fluid align-items-baseline">
         <p class="navbar-brand">Sigma Formation</p>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -25,6 +25,16 @@
                 @else
                     <li class="nav-item">
                         <a class="nav-link {{ $routeName == "formations-list" ? "active" : "" }}" href="{{ route('formations-list') }}">Formations</a>
+                    </li>
+                @endif
+
+                @if ($isUser)
+                    <li class="nav-item">
+                        <a class="nav-link {{ $routeName == "type-list" ? "active" : "" }}" href="{{ route('type-list') }}">Types</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link {{ $routeName == "category-list" ? "active" : "" }}" href="{{ route('category-list') }}">Catégories</a>
                     </li>
                 @endif
             </ul>
