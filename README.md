@@ -13,6 +13,10 @@ Les différents utilisateurs sont séparés en 3 catégories :
 
 Si vous voulez connaître plus en détail le sujet du projet, je vous invite à aller consulter [ce document](https://maxime-pinna.alwaysdata.net/laravel/projet_sigma_M1/Sujet_Laravel_-_M1_WEB_-_2021___2022.pdf).
 
+Par ailleurs, concernant ce projet, j'ai décidé de créer ma base de données à l'aide du modèle conceptuel ci-dessous:
+
+![modele](/mcd.jpg)
+
 ## Les erreurs rencontrées durant le développement
 
 Durant le développement de ce projet, je n'ai rencontré qu'une seule erreur.
