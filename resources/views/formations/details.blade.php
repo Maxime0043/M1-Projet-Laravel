@@ -55,6 +55,8 @@
                 @else
                     <p><strong>Catégorie(s):</strong> Aucune catégorie présente.</p>
                 @endif
+
+                <p><strong>Durée:</strong> {{ $formation->formatedTotalTime() }}.</p>
             </div>
 
             <div class="row">
