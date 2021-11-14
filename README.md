@@ -66,8 +66,15 @@ Puis, pour initialiser votre projet, et donc importer tous les modules nécessai
 composer install
 ```
 
-Pour finir, pour rendre les fichiers du dossier "**storage/app/public**" accessibles depuis le Web, vous devez créer un lien symbolique de "**public/storage**" vers "**storage/app/public**". Pour cela, entrez la commande suivante :
+Par la suite, pour rendre les fichiers du dossier "**storage/app/public**" accessibles depuis le Web, vous devez créer un lien symbolique de "**public/storage**" vers "**storage/app/public**". Pour cela, entrez la commande suivante :
 
 ```bash
 php artisan storage:link
+```
+
+Pour finir, vous pouvez exécuter la commande suivante pour créer la base de donnée et la remplir avec de fausses données :
+
+```bash
+php artisan migrate
+php artisan db:seed
 ```
